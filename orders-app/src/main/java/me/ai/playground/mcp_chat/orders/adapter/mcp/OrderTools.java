@@ -21,16 +21,6 @@ public class OrderTools {
         this.repo = repo;
     }
 
-//    @McpTool(
-//            name = "orders.list",
-//            description = "List the first 10 orders."
-//    )
-//    public List<Order> listOrders(Map<String,Object> args) {
-//        List<Order> orders = repo.findTop10ByOrderByIdAsc();
-//        logger.info(orders.toString());
-//        return orders;
-//    }
-
     @McpTool(
             name = "orders.list",
             description = "List the first 10 orders."
