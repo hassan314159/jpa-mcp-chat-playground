@@ -1,0 +1,45 @@
+spring:
+  ai:
+    ollama:
+      base-url: http://ollama:11434
+      init:
+        pull-model-strategy: when_missing
+      chat:
+        options:
+          model: llama3.2:3b
+          temperature: 0.2
+          tool-options:
+            tool-choice: AUTO
+    mcp:
+      client:
+        enabled: true
+        initialized: true         # auto-run initialize on startup
+        type: SYNC                # exposes a ToolCallbackProvider
+        toolcallback:
+          enabled: true
+          include-connections: # only these connections turned into tools
+            - orders
+        streamable-http:
+          connections:
+            orders:
+              url: http://orders-app:8081/mcp
+        request-timeout: 60s
+        name: my-mcp-client
+        version: 0.0.1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health        # only expose the health endpoint
+  endpoint:
+    health:
+      probes:
+        enabled: true          # enables /health/liveness and /health/readiness
+
+logging:
+  level:
+    org.springframework.ai.mcp: DEBUG
+    org.springframework.ai.model.tool: DEBUG
+    org.springframework.web: DEBUG
+    com.fasterxml.jackson.databind: DEBUG
